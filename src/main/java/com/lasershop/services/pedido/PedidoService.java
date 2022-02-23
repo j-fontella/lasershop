@@ -91,6 +91,9 @@ public class PedidoService {
         if(dataAtual.isBefore(horaMinimaPermitida) || dataAtual.isAfter(horaMaximaPermitida)){
             throw new PedidoInvalidoException(Erros.PEDIDO_HORARIO_NAO_PERMITIDO.getDescricao());
         }
+        if(Utils.dataFimDeSemana(dataAtual)){
+            throw new PedidoInvalidoException(Erros.PEDIDO_FORA_DIA_UTIL.getDescricao());
+        }
     }
 
     private void gerarCarrinho(List<Long> idProdutosPedidos, List<ProdutoPedido> carrinho){

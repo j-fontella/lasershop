@@ -16,6 +16,8 @@ import org.modelmapper.TypeToken;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,5 +74,9 @@ public class Utils {
 
     public static ProdutoPedido converterProdutoToProdutoPedido(Produto produto) {
         return new ModelMapper().map(produto, ProdutoPedido.class);
+    }
+
+    public static boolean dataFimDeSemana(LocalDateTime data){
+        return data.getDayOfWeek().equals(DayOfWeek.SATURDAY) || data.getDayOfWeek().equals(DayOfWeek.SUNDAY);
     }
 }
