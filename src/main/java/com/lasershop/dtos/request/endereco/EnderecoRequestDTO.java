@@ -15,6 +15,8 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode()
 public class EnderecoRequestDTO {
 
+    private Long id;
+
     @NotBlank(message = "Logradouro inválido.")
     @Size(min = 3, max = 50, message = "O logradouro deve ter entre 3 e 50 caracteres.")
     private String logradouro;
