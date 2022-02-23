@@ -23,7 +23,7 @@ public class LoginController {
         return loginService.registrarUsuario(usuarioRequestDTO);
     }
 
-    @PutMapping("/editarUsuario")
+    @PutMapping("/editar")
     public ResponseEntity<?> editarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) throws Exception {
         return loginService.editarUsuario(usuarioRequestDTO);
     }
@@ -33,8 +33,15 @@ public class LoginController {
         return loginService.getTodosUsuarios();
     }
 
-    @GetMapping("/getUsuarioPorNome")
+    @GetMapping("/porNome")
     public ResponseEntity<?> getUsuarioPorNome(@RequestParam String nome){
         return loginService.getUsuarioPorNome(nome);
     }
+
+    @DeleteMapping("/deletar")
+    public ResponseEntity<?> deletarUsuario(@RequestParam Long id){
+        return loginService.deletarUsuario(id);
+    }
+
+
 }
