@@ -1,6 +1,6 @@
 package com.lasershop.dtos.request.login;
 
-import com.lasershop.models.endereco.Endereco;
+import com.lasershop.dtos.request.endereco.EnderecoRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,7 +33,7 @@ public class UsuarioRequestDTO {
     private String senha;
 
     @NotNull(message = "Endereço inválido")
-    private Endereco endereco;
+    private EnderecoRequestDTO endereco;
 
     @NotNull(message = "O limite de crédito deve ser informado")
     private BigDecimal limiteCredito;
