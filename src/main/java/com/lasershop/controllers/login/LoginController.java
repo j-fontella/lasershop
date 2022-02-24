@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
 
 
 @RestController
@@ -23,8 +24,9 @@ public class LoginController {
         return loginService.registrarUsuario(usuarioRequestDTO);
     }
 
+
     @PutMapping("/editar")
-    public ResponseEntity<?> editarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO) throws Exception {
+    public ResponseEntity<?> editarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO)  {
         return loginService.editarUsuario(usuarioRequestDTO);
     }
 

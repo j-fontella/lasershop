@@ -2,14 +2,17 @@ package com.lasershop.services.pedido;
 
 import com.lasershop.domains.Erros;
 import com.lasershop.dtos.request.pedido.PedidoRequestDTO;
+import com.lasershop.dtos.response.pedido.PedidoDataResponseDTO;
+import com.lasershop.dtos.response.pedido.PedidoResponseDTO;
+import com.lasershop.dtos.response.produto.ProdutoResponseDTO;
 import com.lasershop.exceptions.PedidoInvalidoException;
 import com.lasershop.models.login.Usuario;
 import com.lasershop.models.pedido.Pedido;
 import com.lasershop.models.pedido.ProdutoPedido;
 import com.lasershop.models.produto.Produto;
 import com.lasershop.repositorys.login.UsuarioRepository;
-import com.lasershop.repositorys.perdido.PedidoRepository;
-import com.lasershop.repositorys.perdido.ProdutoPedidoRepository;
+import com.lasershop.repositorys.pedido.PedidoRepository;
+import com.lasershop.repositorys.pedido.ProdutoPedidoRepository;
 import com.lasershop.repositorys.produtos.ProdutoRepository;
 import com.lasershop.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +23,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PedidoService {
@@ -103,7 +104,9 @@ public class PedidoService {
                 throw new PedidoInvalidoException(Erros.PRODUTO_NAO_ENCONTRADO.getDescricao());
 
             }
-            carrinho.add(Utils.converterProdutoToProdutoPedido(produto.get()));
+            ProdutoPedido produtoComprado = Utils.converterProdutoToProdutoPedido(produto.get());
+            produtoComprado.setId(null);
+            carrinho.add(produtoComprado);
         }
     }
 
@@ -116,4 +119,21 @@ public class PedidoService {
     }
 
 
+    public ResponseEntity<?> getPedidos() {
+        List<Pedido> pedidos = pedidoRepository.getPedidosPorCliente();
+        List<PedidoResponseDTO> pedidosResponse = new ArrayList<>();
+        pedidos.forEach(pedido -> {
+            PedidoResponseDTO responseDTO = new PedidoResponseDTO();
+            responseDTO.setCliente(pedido.getUsuario().getNome());
+            responseDTO.setQtd(pedido.getProdutos().size());
+            BigDecimal desconto = Objects.isNull(pedido.getDesconto()) ? BigDecimal.ZERO : pedido.getDesconto();
+            responseDTO.setTotal(pedido.getValorTotal().subtract(desconto));
+            responseDTO.setId(pedido.getId());
+            pedidosResponse.add(responseDTO);
+        });
+        Set<PedidoResponseDTO> dadosPedidosResponse = new HashSet<>(pedidosResponse);
+        Set<Pedido> pedidosUniqueResponse = new HashSet<>(pedidos);
+        PedidoDataResponseDTO responseData = new PedidoDataResponseDTO(dadosPedidosResponse, pedidosUniqueResponse);
+        return ResponseEntity.ok().body(responseData);
+    }
 }

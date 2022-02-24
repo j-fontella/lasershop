@@ -27,8 +27,6 @@ public class Usuario {
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     private Endereco endereco;
 
-    private String senha;
-
     @Column
     private BigDecimal limiteCredito;
 

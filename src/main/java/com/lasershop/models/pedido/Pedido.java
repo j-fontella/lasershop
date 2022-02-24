@@ -24,7 +24,7 @@ public class Pedido {
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario usuario;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST,orphanRemoval = true)
     @JoinColumn(name = "id_pedido", referencedColumnName = "id")
     private List<ProdutoPedido> produtos;
 

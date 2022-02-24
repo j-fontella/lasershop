@@ -22,7 +22,7 @@ public class EnderecoRequestDTO {
     private String logradouro;
 
     @NotBlank(message = "Numero inválido.")
-    @Size(min = 3, max = 50, message = "O numero deve ter entre 3 e 20 caracteres.")
+    @Size(min = 1, max = 50, message = "O numero deve ter entre 1 e 20 caracteres.")
     private String numero;
 
     @NotBlank(message = "Bairro inválido.")
@@ -44,6 +44,4 @@ public class EnderecoRequestDTO {
     @Size(min = 8, max = 8, message = "O CEP deve ter 8 caracteres.")
     private String cep;
 
-    @NotNull(message = "")
-    private Long frkUsuario;
 }

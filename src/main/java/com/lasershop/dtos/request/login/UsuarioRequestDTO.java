@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,15 +25,8 @@ public class UsuarioRequestDTO {
     @Size(min = 3, max = 50, message = "O nome deve ter entre 3 e 50 caracteres.")
     private String nome;
 
-    @NotBlank(message = "Email deve ser preenchido")
-    @Email(message = "Você deve inserir um email válido.")
-    private String email;
-
-    @NotBlank(message = "Senha deve ser preenchida")
-    @Size(min = 6, max = 20, message = "A senha deve ter entre 6 e 20 caracteres.")
-    private String senha;
-
     @NotNull(message = "Endereço inválido")
+    @Valid
     private EnderecoRequestDTO endereco;
 
     @NotNull(message = "O limite de crédito deve ser informado")

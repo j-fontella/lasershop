@@ -19,7 +19,7 @@ public class PedidoRequestDTO {
     List<Long> idProdutosComprados;
 
     @NotNull(message = "É obrigatório informar o número de parcelas")
-    @Min(value = 1)
+    @Min(value = 1, message = "O número minimo de parelas é 1")
     Integer parcelas;
 
     @NotNull(message = "É obrigatório informar o usuário comprador")

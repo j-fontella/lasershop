@@ -32,11 +32,14 @@ public class LoginService {
     public ResponseEntity<?> registrarUsuario(UsuarioRequestDTO usuarioRequestDTO) throws NoSuchAlgorithmException {
         Optional<Usuario> usuario = usuarioRepository.findByNome(usuarioRequestDTO.getNome());
         if(usuario.isPresent()){
+            System.out.println(usuario.get().getNome());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Utils.gerarErro(Erros.USUARIO_JA_CADASTRADO.getDescricao()));
         }
         try {
+            System.out.println("wewewe");
             salvarUsuario(usuarioRequestDTO);
         }catch (Exception ex){
+            System.out.println("wewewy");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Utils.gerarErro(ex.getMessage()));
         }
         return ResponseEntity.ok().build();
@@ -85,10 +88,7 @@ public class LoginService {
         return ResponseEntity.ok().body(usuarioResponse);
     }
 
-    private void salvarUsuario(UsuarioRequestDTO usuarioRequestDTO) throws NoSuchAlgorithmException {
-        String senhaCriptografada = Utils.encriptarStringSHA256(usuarioRequestDTO.getSenha());
-        usuarioRequestDTO.setSenha(senhaCriptografada);
-
+    private void salvarUsuario(UsuarioRequestDTO usuarioRequestDTO)  {
         Endereco enderecoACadastrar;
         Endereco enderecoUsuario = Utils.converterEnderecoRequestToBase(usuarioRequestDTO.getEndereco());
         Long idEnderecoUsuario = enderecoUsuario.getId();
